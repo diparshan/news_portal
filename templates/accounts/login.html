@@ -1,0 +1,32 @@
+{% extends "partials/base.html" %}
+
+{% block header %}
+{% include "partials/header.html" %}
+{% endblock header %}
+ 
+{% block navarea %}
+{% include "partials/navarea.html" %}
+{% endblock navarea %}
+  
+{% block news_section %}
+{% include "partials/news_section.html" %}
+{% endblock news_section %}
+
+{% block content %}
+
+<form method="POST">
+{{form}}
+{% csrf_token %}
+<button type="submit" class="btn btn-success">Success</button>
+</form>
+
+{% endblock content %}
+  
+
+{% block footer %}
+{% include "partials/footer.html" %}
+{% endblock footer %}
+
+{% block script %}
+{% include "partials/script.html" %}
+{% endblock script %}
