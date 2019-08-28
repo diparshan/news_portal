@@ -4,22 +4,36 @@
 {% block header %}
 {% include "partials/header.html" %}
 {% endblock header %}
- 
+
 {% block navarea %}
 {% include "partials/navarea.html" %}
 {% endblock navarea %}
-  
+
 {% block news_section %}
 {% include "partials/news_section.html" %}
 {% endblock news_section %}
 
 {% block content %}
+<div class="col-lg-3 col-md-3">
+    
+</div>
 
-<p>Your account has been created successfully</p>
-<p><a href="{% url 'login' %}"><span>Login Now</span></a></p>
+<div class="col-lg-6 col-md-6">
+<p>Do you really want to delete this news?</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-info">Yes</button>
+    </form>
+    <a href = "{% url 'home' %}"> <button type="button" class="btn btn-primary">No</button></a>
+
+</div>
+
+<div class="col-lg-3 col-md-3">
+    
+</div>
 
 {% endblock content %}
-  
 
 {% block footer %}
 {% include "partials/footer.html" %}

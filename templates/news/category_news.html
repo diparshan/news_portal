@@ -1,0 +1,46 @@
+{% extends "partials/base.html" %}
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block header %}
+{% include "partials/header.html" %}
+{% endblock header %}
+s
+{% block navarea %}
+{% include "partials/navarea.html" %}
+{% endblock navarea %}
+
+{% block news_section %}
+{% include "partials/news_section.html" %}
+{% endblock news_section %}
+
+{% block content %}
+
+<div class="col-lg-12 col-md-12">
+    <div class="">
+        <div class="single_post_content">
+        <h2><span>{{ category }}</span></h2>
+        <ul class="business_catgnav">
+        {% for news in category_list %}
+            <li>
+            <figure class="bsbig_fig wow fadeInDown"> <a href="{{ news.get_absolute_url }}" class="featured_img"> <img alt="" src="{{ news.cover_image.url }}"> <span class="overlay"></span> </a>
+                <figcaption> <a href="{{ news.get_absolute_url }}">{{ news.title }}</a> </figcaption>
+                <p>{{ news.story }}</p>
+            </figure>
+            </li>
+        {% endfor %}
+        </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block footer %}
+{% include "partials/footer.html" %}
+{% endblock footer %}
+
+{% block script %}
+{% include "partials/script.html" %}
+{% endblock script %}

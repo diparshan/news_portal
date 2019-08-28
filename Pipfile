@@ -9,6 +9,7 @@ pylint = "*"
 [packages]
 django = "==2.2.2"
 django-crispy-forms = "*"
+jinja2 = "*"
 
 [requires]
 python_version = "3.7"

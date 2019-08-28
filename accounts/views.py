@@ -27,5 +27,5 @@ class UserSignUpView(View):
             #     return redirect("home")
 
             return render(request, "accounts/signup_success.html")
-        return render(request, self.template_name)
+        return render(request, self.template_name, {"form":form})
 

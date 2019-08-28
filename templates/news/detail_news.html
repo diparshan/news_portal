@@ -1,0 +1,211 @@
+{% extends "partials/base.html" %}
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block header %}
+{% include "partials/header.html" %}
+{% endblock header %}
+
+{% block navarea %}
+{% include "partials/navarea.html" %}
+{% endblock navarea %}
+
+{% block news_section %}
+{% include "partials/news_section.html" %}
+{% endblock news_section %}
+
+{% block content %}
+
+  <section id="contentSection">
+    <div class="row">
+      <div class="col-lg-8 col-md-8 col-sm-8">
+        <div class="left_content">
+          <div class="single_page">
+            <ol class="breadcrumb">
+              <li><a href="{% url 'home' %}">Home</a></li>
+              <li><a href="{% url 'category_news' category=news.get_category_display %}">{{ news.get_category_display }}</a></li>
+            </ol>
+            <h1>{{ news.title }}</h1>
+            <div class="post_commentbox"> <a href="#"><i class="fa fa-user"></i>{{ news.reporter }}</a> <span><i class="fa fa-calendar"></i>{{ news.created_at }}</span> <a href="#"><i class="fa fa-tags"></i>{{ news.get_category_display }}</a> <span><i >Count:</i>{{ news.count }}</span> </div>
+            <div class="single_page_content"> <img class="img-center" src="{{ news.cover_image.url }}" alt="">
+              <p>{{ news.story }}</p>
+              {% if request.user.is_authenticated and request.user == news.reporter %}
+              <a href="{{ news.get_absolute_url }}update/"> <button class="btn btn-blue">Update</button></a>
+              <!-- <a href="{{ news.get_absolute_url }}delete/"> <button class="btn btn-danger">Delete</button></a> -->
+              {% include "partials/delete_modal.html" %}
+              {% endif %}
+            </div>
+            
+            <div class="related_post">
+              <h2>All Comments <i class="fa fa-thumbs-o-up"></i></h2>
+              
+              <div class="list-group" id="comment-list">
+              {% for comment in comments %}
+                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                  <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ comment.comment_by }}</h5>
+                    <small class="text-muted">{{ comment.create_at }}</small>
+                  </div>
+                  <p class="mb-1">{{ comment.feedback }}</p>
+                </a>
+                {% endfor %}
+              </div>
+            </div>
+            <div>
+              <form id="comment-form">
+                <div class="form-group">
+                  <label for="feedback">Leave Comment</label>
+                  <textarea class="form-control" rows="3" name="feedback" id="feedback"></textarea>
+                </div>
+                <button type="submit" class="btn btn-info">Comment</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <nav class="nav-slit"> <a class="prev" href="#"> <span class="icon-wrap"><i class="fa fa-angle-left"></i></span>
+        <div>
+          <h3>City Lights</h3>
+          <img src="../images/post_img1.jpg" alt=""/> </div>
+        </a> <a class="next" href="#"> <span class="icon-wrap"><i class="fa fa-angle-right"></i></span>
+        <div>
+          <h3>Street Hills</h3>
+          <img src="../images/post_img1.jpg" alt=""/> </div>
+        </a> </nav>
+      <div class="col-lg-4 col-md-4 col-sm-4">
+        <aside class="right_content">
+          <div class="single_sidebar">
+            <h2><span>Popular Post</span></h2>
+            <ul class="spost_nav">
+              <li>
+                <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img1.jpg"> </a>
+                  <div class="media-body"> <a href="single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 1</a> </div>
+                </div>
+              </li>
+              <li>
+                <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img2.jpg"> </a>
+                  <div class="media-body"> <a href="single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 2</a> </div>
+                </div>
+              </li>
+              <li>
+                <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img1.jpg"> </a>
+                  <div class="media-body"> <a href="single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 3</a> </div>
+                </div>
+              </li>
+              <li>
+                <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img2.jpg"> </a>
+                  <div class="media-body"> <a href="single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 4</a> </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="single_sidebar">
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active"><a href="#category" aria-controls="home" role="tab" data-toggle="tab">Category</a></li>
+              <li role="presentation"><a href="#video" aria-controls="profile" role="tab" data-toggle="tab">Video</a></li>
+              <li role="presentation"><a href="#comments" aria-controls="messages" role="tab" data-toggle="tab">Comments</a></li>
+            </ul>
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="category">
+                <ul>
+                  <li class="cat-item"><a href="#">Sports</a></li>
+                  <li class="cat-item"><a href="#">Fashion</a></li>
+                  <li class="cat-item"><a href="#">Business</a></li>
+                  <li class="cat-item"><a href="#">Technology</a></li>
+                  <li class="cat-item"><a href="#">Games</a></li>
+                  <li class="cat-item"><a href="#">Life &amp; Style</a></li>
+                  <li class="cat-item"><a href="#">Photography</a></li>
+                </ul>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="video">
+                <div class="vide_area">
+                  <iframe width="100%" height="250" src="http://www.youtube.com/embed/h5QWbURNEpA?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="comments">
+                <ul class="spost_nav">
+                  <li>
+                    <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img1.jpg"> </a>
+                      <div class="media-body"> <a href="single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 1</a> </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img2.jpg"> </a>
+                      <div class="media-body"> <a href="single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 2</a> </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img1.jpg"> </a>
+                      <div class="media-body"> <a href="single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 3</a> </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img2.jpg"> </a>
+                      <div class="media-body"> <a href="single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 4</a> </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="single_sidebar wow fadeInDown">
+            <h2><span>Sponsor</span></h2>
+            <a class="sideAdd" href="#"><img src="../images/add_img.jpg" alt=""></a> </div>
+          <div class="single_sidebar wow fadeInDown">
+            <h2><span>Category Archive</span></h2>
+            <select class="catgArchive">
+              <option>Select Category</option>
+              <option>Life styles</option>
+              <option>Sports</option>
+              <option>Technology</option>
+              <option>Treads</option>
+            </select>
+          </div>
+          <div class="single_sidebar wow fadeInDown">
+            <h2><span>Links</span></h2>
+            <ul>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Rss Feed</a></li>
+              <li><a href="#">Login</a></li>
+              <li><a href="#">Life &amp; Style</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+
+{% endblock content %}
+
+{% block footer %}
+{% include "partials/footer.html" %}
+{% endblock footer %}
+
+{% block script %}
+
+{% include "partials/script.html" %}
+
+<script>
+  $("#comment-form").submit(function (error){
+    error.preventDefault();
+    $.ajax({
+      url: "{{ news.get_absolute_url }}comment/",
+      method: "post",
+      data: {
+        feedback: $("#feedback").val(),
+        csrfmiddlewaretoken : "{{ csrf_token }}"
+      },
+      success: function(response){
+        console.log(response)
+        $("#comment-list").append(response)
+      },
+      error: function(err){
+        console.log(err)
+      }
+    });
+  });
+</script>
+
+{% endblock script %}
