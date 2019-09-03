@@ -42,10 +42,11 @@ class NewsTemplateView(TemplateView):
         news = News.objects.all()
         context["latest_news"] = news.order_by("-created_at")[:10]
         context["political_news"] = news.filter(category="0").order_by("-created_at")
-        context["sport_news"] = news.filter(category="1").order_by("-created_at")
+        context["sports_news"] = news.filter(category="1").order_by("-created_at")
         context["fashion_news"] = news.filter(category="2").order_by("-created_at")
         context["technology_news"] = news.filter(category="3").order_by("-created_at")
-        context["popular_mews"] = news.order_by("-count")
+        context["business_news"] = news.filter(category="4").order_by("-created_at")
+        context["popular_news"] = news.order_by("-count")
         return context
 
 class NewsCategoryView(ListView):
@@ -75,15 +76,20 @@ class NewsDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['comments'] = Comment.objects.filter(news=self.object)
+        # print("count>>>>>>>>>>>>>>>>>>>>>>>>",self.object.count)
+        # print("create>>>>>>>>>>>>>>>>>>>>>>>>",self.object.created_at)
+        # print("updated>>>>>>>>>>>>>>>>>>>>>>>>",self.object.updated_at)
+        context["popular_news"] = News.objects.all().order_by("-count")
         self.object.count = self.object.count +1
         self.object.save()
+
         return context
     
 
 class NewsUpdateView(LoginRequiredMixin, UpdateView):
     model = News
     template_name = "news/update_news.html"
-    fields = ("title", "story")
+    fields = ("title", "story", "count")
     success_url = reverse_lazy("home")
 
 class NewsDeleteView(LoginRequiredMixin, DeleteView):

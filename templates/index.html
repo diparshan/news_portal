@@ -45,7 +45,8 @@
                 {% if forloop.counter != 1 and forloop.counter <= 4 %}
                 <li>
                   <div class="media wow fadeInDown"> <a href="{{ news.get_absolute_url }}" class="media-left"> <img alt="" src="{{ news.cover_image.url }}"> <span class="overlay"></span> </a>
-                    <div class="media-body"> <a href="{{ news.get_absolute_url }}" class="catg_title"> {{ news.title }}</a> </div>
+                    <div class="media-body"> <a href="{{ news.get_absolute_url }}" class="catg_title"> {{ news.title }} </a> </div>
+                    {{ news.news_comment.count }} comments                  
                   </div>
                 </li>
                 {% endif %}
@@ -69,7 +70,7 @@
                   <li>
                     <figure class="bsbig_fig"> <a href="{{ news.get_absolute_url }}" class="featured_img"> <img alt="" src="{{ news.cover_image.url }}"> <span class="overlay"></span> </a>
                       <figcaption> <a href="{{ news.get_absolute_url }}">{{ news.title }}</a> </figcaption>
-                      <p>{{ news.story }}</p>
+                      <p>{{ news.story|truncatewords:40 }}</p>
                     </figure>
                   </li>
                   {% endif %}
@@ -129,39 +130,39 @@
           </div>
          
           <div class="single_post_content">
-            <h2><span>Photography</span></h2>
-            <ul class="photograph_nav  wow fadeInDown">
-              <li>
-                <div class="photo_grid">
-                  <figure class="effect-layla"> <a class="fancybox-buttons" data-fancybox-group="button" href="images/photograph_img2.jpg' %}" title="Photography Ttile 1"> <img src=" 'images/photograph_img2.jpg' %}" alt=""/></a> </figure>
-                </div>
-              </li>
-              <li>
-                <div class="photo_grid">
-                  <figure class="effect-layla"> <a class="fancybox-buttons" data-fancybox-group="button" href="images/photograph_img3.jpg' %}" title="Photography Ttile 2"> <img src=" 'images/photograph_img3.jpg' %}" alt=""/> </a> </figure>
-                </div>
-              </li>
-              <li>
-                <div class="photo_grid">
-                  <figure class="effect-layla"> <a class="fancybox-buttons" data-fancybox-group="button" href="images/photograph_img4.jpg' %}" title="Photography Ttile 3"> <img src=" 'images/photograph_img4.jpg' %}" alt=""/> </a> </figure>
-                </div>
-              </li>
-              <li>
-                <div class="photo_grid">
-                  <figure class="effect-layla"> <a class="fancybox-buttons" data-fancybox-group="button" href="images/photograph_img4.jpg' %}" title="Photography Ttile 4"> <img src=" 'images/photograph_img4.jpg' %}" alt=""/> </a> </figure>
-                </div>
-              </li>
-              <li>
-                <div class="photo_grid">
-                  <figure class="effect-layla"> <a class="fancybox-buttons" data-fancybox-group="button" href="images/photograph_img2.jpg' %}" title="Photography Ttile 5"> <img src=" 'images/photograph_img2.jpg' %}" alt=""/> </a> </figure>
-                </div>
-              </li>
-              <li>
-                <div class="photo_grid">
-                  <figure class="effect-layla"> <a class="fancybox-buttons" data-fancybox-group="button" href="images/photograph_img3.jpg' %}" title="Photography Ttile 6"> <img src=" 'images/photograph_img3.jpg' %}" alt=""/> </a> </figure>
-                </div>
-              </li>
-            </ul>
+            <h2><span>Business</span></h2>
+            <div class="single_post_content_left">
+              <ul class="business_catgnav">
+              {% for news in business_news %}
+              {% if forloop.counter == 1 %}
+                <li>
+                  <figure class="bsbig_fig  wow fadeInDown"> <a class="featured_img" href="{{ news.get_absolute_url }}"> <img src="{{ news.cover_image.url }} " alt=""> <span class="overlay"></span> </a>
+                    <figcaption> <a href="{{ news.get_absolute_url }}">{{ news.title}}</a> </figcaption>
+                    <p>{{ news.story }}</p>
+                  </figure>
+                </li>
+              {% endif %}
+              {% endfor %}
+              </ul>
+            </div>
+            <div class="single_post_content_right">
+              <ul class="spost_nav">
+              {% for news in business_news %}
+              {% if forloop.counter != 1 and forloop.counter <= 4 %}
+                <li>
+                  <div class="media wow fadeInDown"> <a href="{{ news.get_absolute_url }}" class="media-left"> <img alt="" src="{{ news.cover_image.url }}"> </a>
+                    <div class="media-body"> <a href="{{ news.get_absolute_url }}" class="catg_title">{{ news.title }}</a> </div>
+                  </div>
+                </li>
+              {% endif %}
+              {% endfor %}
+              </ul>
+              {% for news in  sports_news %}
+              {% if forloop.counter == 1 %}
+                <a href="{% url 'category_news' category=news.get_category_display %}"> see all</a>
+              {% endif %}
+              {% endfor %}
+            </div>
           </div>
           <div class="single_post_content">
             <h2><span>Sports</span></h2>
@@ -170,7 +171,7 @@
               {% for news in sports_news %}
               {% if forloop.counter == 1 %}
                 <li>
-                  <figure class="bsbig_fig  wow fadeInDown"> <a class="featured_img" href="{{ news.get_absolute_url }}"> <img src="{{ news.cover_image.url }}" 'images/featured_img1.jpg' %}" alt=""> <span class="overlay"></span> </a>
+                  <figure class="bsbig_fig  wow fadeInDown"> <a class="featured_img" href="{{ news.get_absolute_url }}"> <img src="{{ news.cover_image.url }}" alt=""> <span class="overlay"></span> </a>
                     <figcaption> <a href="{{ news.get_absolute_url }}">{{ news.title}}</a> </figcaption>
                     <p>{{ news.story }}</p>
                   </figure>
@@ -184,7 +185,7 @@
               {% for news in sports_news %}
               {% if forloop.counter != 1 and forloop.counter <= 4 %}
                 <li>
-                  <div class="media wow fadeInDown"> <a href="{{ news.get_absolute_url }}" class="media-left"> <img alt="" src="{{ news.cover_image.url }}" 'images/post_img1.jpg' %}"> </a>
+                  <div class="media wow fadeInDown"> <a href="{{ news.get_absolute_url }}" class="media-left"> <img alt="" src="{{ news.cover_image.url }}"> </a>
                     <div class="media-body"> <a href="{{ news.get_absolute_url }}" class="catg_title">{{ news.title }}</a> </div>
                   </div>
                 </li>
@@ -206,7 +207,7 @@
             <h2><span>Popular Post</span></h2>
             <ul class="spost_nav">
             {% for news in popular_news %}
-            {% if forloop.counter == 5 %}
+            {% if forloop.counter <= 5 %}
               <li>
                 <div class="media wow fadeInDown"> <a href="{{ news.get_absolute_url }}" class="media-left"> <img alt="" src="{{ news.cover_image.url }}"> </a>
                   <div class="media-body"> <a href="{{ news.get_absolute_url }}" class="catg_title">{{ news.title }}</a> </div>
@@ -252,7 +253,7 @@
           </div>
           <div class="single_sidebar wow fadeInDown">
             <h2><span>Sponsor</span></h2>
-            <a class="sideAdd" href="#"><img src="{{ news.cover_image.url }}" 'images/add_img.jpg' %}" alt=""></a> </div>
+            <a class="sideAdd" href="#"><img src=" 'images/add_img.jpg' %}" alt=""></a> </div>
           <div class="single_sidebar wow fadeInDown">
             <h2><span>Category Archive</span></h2>
             <select class="catgArchive">
